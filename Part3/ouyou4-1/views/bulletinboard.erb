@@ -9,11 +9,11 @@
 </head>
 
 <body>
-    <h1 align="left">BulletinBoard</h1>
-    <p>こんにちは。 <%=@user%> さん</p>
-    <form action="/logout" method="post">
-      <input type="submit" value="ログアウト" style="font-size: 20px">
-    </form>
+  <h1 align="left">BulletinBoard</h1>
+  <p>こんにちは。 <%=@now_user_name%> さん</p>
+  <form action="/logout" method="post">
+    <input type="submit" value="ログアウト" style="font-size: 20px">
+  </form>
   <hr>
   <h2 align="center">掲示板</h2>
   <form action="/post" method="post">
@@ -30,21 +30,36 @@
     </table>
   </form>
   <hr>
-  <h2 align="center">投稿一覧</h2>
-  <table align="center">
-    <tr>
-      <th>投稿者</th>
-      <th>本文</th>
-      <th>投稿日時</th>
-    </tr>
-    <% @posts.each do |post| %>
-    <tr>
-      <td><%= post.user %></td>
-      <td><%= post.msg %></td>
-      <td><%= post.date %></td>
-    </tr>
-    <% end %>
+  <h2 align="center">タイムライン</h2>
+  <table align="center" style="max-width: 700px" border="1">
+    <% @posts.each do |message| %>
+      <tr>
+        <td>
+          <div style="margin:10px;display:flex">
+            <div style="margin-right:10px">
+              <img src="https://placehold.jp/150x150.png" alt="アイコン" width="50" height="50">
+            </div>
+            <div>
+              <div>
+                <b>
+                  <%= message.user_name %>
+                </b>@toyoda_shingo・<%= message.date %>
+              </div>
+                <%= message.msg %>
+              <% if message.user_id == @now_user_id %>
+                <form action="/delete" method="post">
+                  <input type="hidden" name="delete_id" value="<%= message.id %>">
+                  <input type="submit" value="削除">
+                </form>
+              <% end %>
+            </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <% end %>
   </table>
+
 
 </body>
 

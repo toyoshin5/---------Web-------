@@ -14,9 +14,11 @@ end
 
 #投稿のクラス
 class Posts 
-    attr_accessor :user, :msg, :date
-    def initialize(user, msg, date)
-        @user = user
+    attr_accessor :id,:user_id,:user_name, :msg, :date
+    def initialize(id,user_id,user_name, msg, date)
+        @id = id
+        @user_id = user_id
+        @user_name = user_name
         @msg = msg
         @date = date
     end
@@ -42,15 +44,15 @@ get '/' do
     if session[:user_id].nil?
         redirect '/login'
     else
-        user_id = session[:user_id]
-        @user = Passwd.where(:id => user_id).first.user
+        @now_user_id = session[:user_id]
+        @now_user_name = Passwd.where(:id => @now_user_id).first.user
         messages = Message.all
         #投稿一覧を初期化
         @posts = []
         #メッセージとユーザ名取得して投稿一覧に代入
         messages.each do |message|
             user = Passwd.where(:id => message.user_id).first.user
-            @posts << Posts.new(user, message.msg, message.date)
+            @posts << Posts.new(message.id,message.user_id,user, message.msg, message.date)
         end
         erb :bulletinboard
     end
@@ -62,6 +64,14 @@ post '/post' do
     #メッセージを保存
     Message.create(:user_id => user_id, :msg => params[:message], :date => Time.now)
 
+    redirect '/'
+end
+
+post '/delete' do
+    #削除するメッセージのidを取得
+    delete_id = params[:delete_id]
+    #削除
+    Message.delete(delete_id)
     redirect '/'
 end
 
