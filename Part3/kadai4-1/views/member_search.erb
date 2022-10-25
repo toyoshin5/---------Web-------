@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>member_search</title>
+</head>
+
+<body>
+  <h1>member_search</h1>
+  <table border>
+    <tr>
+      <th>member_search</th>
+    </tr>
+    <% @lab_members.each do |member| %>
+      <tr>
+        <td>
+          <%= member.member_name%>
+        </td>
+      </tr>
+      <% end %>
+  </table>
+</body>
+</html>

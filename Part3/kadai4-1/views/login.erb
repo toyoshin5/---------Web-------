@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+  <html lang="ja">
+    <head>
+      <meta charset="utf-8">
+      <title><%= @title %></title>
+    </head>
+    <body>
+      <h1>Hello!, <%= @student_name %> </h1>
+      <h2>Your Grade is blow.</h2>
+      <table border>
+        <tr>
+          <th>id</th>
+          <th>student_id</th>
+          <th>klass</th>
+          <th>grade</th>
+        </tr>
+        <% @student.each do |stu| %>
+        <tr>
+          <td><%= stu.id %></td>
+            <td><%= stu.student_id %></td>
+            <td><%= stu.klass %></td>
+            <td><%= stu.grade %></td>
+</tr>
+        <% end %>
+      </table>
+    </body>
+  </html>

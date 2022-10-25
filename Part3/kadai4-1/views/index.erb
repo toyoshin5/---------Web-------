@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>
+    <%= @title %>
+  </title>
+</head>
+
+<body>
+  <h1>Hello, <%=@world%>
+  </h1>
+  <table>
+    <tr>
+      <td>lab_name</td>
+    </tr>
+    <form method="post" action="lab_search">
+      <tr>
+        <td><input type="text" name="lab_name"></td>
+        <td><input type="submit" value="Search"></td>
+      </tr>
+    </form>
+
+  </table>
+  <table>
+    <tr>
+      <td>student_name</td>
+    </tr>
+    <form method="post" action="member_search">
+      <tr>
+        <td><input type="text" name="member_name"></td>
+        <td><input type="submit" value="Search"></td>
+      </tr>
+    </form>
+
+  </table>
+</body>
+
+</html>
