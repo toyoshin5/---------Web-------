@@ -58,9 +58,9 @@ end
 
 post '/post' do
     user_id = session[:user_id]
-    redirect '/' if params[:msg].empty?
+    redirect '/' if params[:message].empty?
     #メッセージを保存
-    Message.create(:user_id => user_id, :msg => params[:msg], :date => Time.now)
+    Message.create(:user_id => user_id, :msg => params[:message], :date => Time.now)
 
     redirect '/'
 end
