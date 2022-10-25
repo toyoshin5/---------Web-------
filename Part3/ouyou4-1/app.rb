@@ -10,9 +10,10 @@ ActiveRecord::Base.establish_connection(
 class Passwd < ActiveRecord::Base
 end 
 class Message < ActiveRecord::Base
-end 
+end
+
+#投稿のクラス
 class Posts 
-    #名前,メッセージ,日時を格納する
     attr_accessor :user, :msg, :date
     def initialize(user, msg, date)
         @user = user
@@ -35,6 +36,7 @@ post '/login' do
     redirect '/'
 end
 
+#メイン画面
 get '/' do
     #セッションにuser_idがあるかどうかでログインしているかどうかを判断している
     if session[:user_id].nil?
