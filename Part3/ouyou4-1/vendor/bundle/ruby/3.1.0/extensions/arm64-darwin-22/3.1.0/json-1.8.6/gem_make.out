@@ -1,0 +1,13 @@
+current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-1/vendor/bundle/ruby/3.1.0/gems/json-1.8.6/ext/json
+/Users/toyoshin/.rbenv/versions/3.1.2/bin/ruby -I /Users/toyoshin/.rbenv/versions/3.1.2/lib/ruby/3.1.0 -r ./siteconf20221026-6738-p06rfe.rb extconf.rb
+creating Makefile
+
+current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-1/vendor/bundle/ruby/3.1.0/gems/json-1.8.6/ext/json
+make DESTDIR\= clean
+
+current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-1/vendor/bundle/ruby/3.1.0/gems/json-1.8.6/ext/json
+make DESTDIR\=
+make: Nothing to be done for `all'.
+
+current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-1/vendor/bundle/ruby/3.1.0/gems/json-1.8.6/ext/json
+make DESTDIR\= install

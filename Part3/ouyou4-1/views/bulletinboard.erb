@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="utf-8">
   <title>
@@ -13,21 +12,6 @@
   <p>こんにちは。 <%=@now_user_name%> さん</p>
   <form action="/logout" method="post">
     <input type="submit" value="ログアウト" style="font-size: 20px">
-  </form>
-  <hr>
-  <h2 align="center">掲示板</h2>
-  <form action="/post" method="post">
-    <table align="center">
-      <tr>
-        <td>本文</td>
-        <td><input type="text" name="message" style="font-size: 20px" placeholder="いまどうしてる?"></td>
-      </tr>
-      <tr>
-        <td colspan="2" align="center">
-          <input type="submit" value="投稿" style="font-size: 20px">
-        </td>
-      </tr>
-    </table>
   </form>
   <hr>
   <h2 align="center">タイムライン</h2>
@@ -43,7 +27,7 @@
               <div>
                 <b>
                   <%= message.user_name %>
-                </b>@toyoda_shingo・<%= message.date %>
+                </b>@user_<%= message.user_id %>・<%= message.date_relative %>
               </div>
                 <%= message.msg %>
               <% if message.user_id == @now_user_id %>
@@ -59,6 +43,22 @@
       </tr>
       <% end %>
   </table>
+  <hr>
+  <h2 align="center">投稿</h2>
+  <form action="/post" method="post">
+    <table align="center">
+      <tr>
+        <td>本文</td>
+        <td><input type="text" name="message" style="font-size: 20px" placeholder="いまどうしてる?"></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <input type="submit" value="投稿" style="font-size: 20px">
+        </td>
+      </tr>
+    </table>
+  </form>
+
 
 
 </body>

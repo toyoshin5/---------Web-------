@@ -2,6 +2,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'active_record'
+require 'time'
 enable :sessions # セッションを有効にする
 ActiveRecord::Base.establish_connection(
   adapter: 'sqlite3',
@@ -14,13 +15,29 @@ end
 
 #投稿のクラス
 class Posts 
-    attr_accessor :id,:user_id,:user_name, :msg, :date
+    attr_accessor :id,:user_id,:user_name, :msg, :date ,:date_relative
     def initialize(id,user_id,user_name, msg, date)
         @id = id
         @user_id = user_id
         @user_name = user_name
         @msg = msg
         @date = date
+        @date_relative = relative_time(date)
+    end
+    def relative_time(date)
+        date = Time.parse(date)
+        diff = Time.now - date
+        if diff < 60
+            return "#{diff.to_i}秒前"
+        elsif diff < 3600
+            return "#{(diff/60).to_i}分前"
+        elsif diff < 86400
+            return "#{(diff/3600).to_i}時間前"
+        elsif diff < 604800
+            return "#{(diff/86400).to_i}日前"
+        else
+            return date.strftime("%Y/%m/%d %H:%M")
+        end
     end
 end
 
@@ -58,6 +75,7 @@ get '/' do
     end
 end
 
+
 post '/post' do
     user_id = session[:user_id]
     redirect '/' if params[:message].empty?
@@ -72,6 +90,7 @@ post '/delete' do
     delete_id = params[:delete_id]
     #削除
     Message.delete(delete_id)
+
     redirect '/'
 end
 
@@ -80,27 +99,3 @@ post '/logout' do
     redirect '/login'
 end
 
-# post '/lab_search' do
-#     if !Lab.where(:lab_name => params[:lab_name]).empty?
-#         lab = Lab.where(:lab_name => params[:lab_name]).first
-#         @lab_members = LabMember.where(:lab_id => lab.id)
-#         erb :lab_search
-#     else
-#         redirect '/'
-#     end
-# end
-# post '/member_search' do
-#     if !LabMember.where(:member_name => params[:member_name]).empty?
-#         member = LabMember.where(:member_name => params[:member_name]).first
-#         @lab_members = LabMember.where(:lab_id => member.lab_id).where.not(:member_name => params[:member_name])
-#         erb :member_search
-#     else
-#         redirect '/'
-#     end
-# end
-
-# get '/seiseki' do
-#     @title = 'Seiseki View'
-#     @students = LabMember.all
-#     erb :lab_search
-# end
