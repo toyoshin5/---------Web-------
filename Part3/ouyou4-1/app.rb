@@ -42,17 +42,28 @@ class Posts
 end
 
 get '/login' do
+    #ログインに失敗したらエラーメッセージを表示
+    if session[:error]
+        @error = session[:error]
+        session[:error] = nil
+    end
     erb :index
 end
 
 post '/login' do
     user = params[:user]
     password = params[:password]
+    #パスワードをハッシュ化
+    password = Digest::SHA256.hexdigest(password)
     #ユーザidとパスワードが一致したらresにユーザidを入れる
     @res = Passwd.where(:user => user, :password => password).first
-    redirect '/login' if @res.nil?#@resがnilだと /loginにリダイレクト
-    session[:user_id] = @res['id'].to_i  #@res['id'].to_iは@res['id']と取得されるデータが文字列なので整数に変換してsession[:user_id]に代入している。これでsessionに現在ログインしているuserが保持される。
-    redirect '/'
+    if @res 
+        session[:user_id] = @res['id'].to_i  #@res['id'].to_iは@res['id']と取得されるデータが文字列なので整数に変換してsession[:user_id]に代入している。これでsessionに現在ログインしているuserが保持される。
+        redirect '/'
+    else
+        session[:error] = "ユーザ名またはパスワードが違います"
+        redirect '/login' #@resがnilだと /loginにリダイレクト
+    end
 end
 
 #メイン画面
@@ -66,8 +77,9 @@ get '/' do
         messages = Message.all
         #投稿一覧を初期化
         @posts = []
-        #メッセージとユーザ名取得して投稿一覧に代入
-        messages.each do |message|
+        #メッセージとユーザ名取得して投稿一覧に逆順で代入
+
+        messages.reverse_each do |message|
             user = Passwd.where(:id => message.user_id).first.user
             @posts << Posts.new(message.id,message.user_id,user, message.msg, message.date)
         end
