@@ -1,5 +1,5 @@
 current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-1/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
-/Users/toyoshin/.rbenv/versions/2.7.6/bin/ruby -I /Users/toyoshin/.rbenv/versions/2.7.6/lib/ruby/2.7.0 -r ./siteconf20221026-78570-r93sv.rb extconf.rb
+/Users/toyoshin/.rbenv/versions/2.7.6/bin/ruby -I /Users/toyoshin/.rbenv/versions/2.7.6/lib/ruby/2.7.0 -r ./siteconf20221031-69962-14gxxg7.rb extconf.rb
 checking for sqlite3.h... yes
 checking for pthread_create() in -lpthread... yes
 checking for sqlite3_libversion_number() in -lsqlite3... yes
@@ -30,4 +30,4 @@ linking shared-object sqlite3/sqlite3_native.bundle
 
 current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-1/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20221026-78570-2yt1bs/sqlite3
+/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20221031-69962-1byct4p/sqlite3

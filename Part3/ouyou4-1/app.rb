@@ -78,7 +78,6 @@ get '/' do
         #投稿一覧を初期化
         @posts = []
         #メッセージとユーザ名取得して投稿一覧に逆順で代入
-
         messages.reverse_each do |message|
             user = Passwd.where(:id => message.user_id).first.user
             @posts << Posts.new(message.id,message.user_id,user, message.msg, message.date)

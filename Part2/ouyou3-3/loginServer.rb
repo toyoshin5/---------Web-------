@@ -20,6 +20,6 @@ require 'sqlite3'
     res['Content-Type'] = 'text/html'
     res.body = body
     end
-  srv.start
+  srv.startZ
   trap("INT"){ srv.shutdown }
 srv.start
