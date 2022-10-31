@@ -17,22 +17,26 @@ end
 #ブックマークのクラス
 class BookMark
     attr_accessor :id,:url,:title
-    def initialize(id,url)
+    def initialize(id,url,title)
         @id = id
         @url = url
-        @title = get_title(url)
+        @title = title
     end
     #URLからWebページのタイトルを取得する
-    def get_title(url)
-        URI.open(url) do |f|
-            f.each_line do |line|
-                if line =~ /<title>(.*)<\/title>/
-                    return $1
-                end
+   
+end
+
+
+def get_title(url)
+    URI.open(url) do |f|
+        f.each_line do |line|
+            if line =~ /<title>(.*)<\/title>/
+                return $1
             end
         end
     end
 end
+
 
 get '/login' do
     #ログインに失敗したらエラーメッセージを表示
@@ -65,6 +69,11 @@ get '/' do
     if session[:user_id].nil?
         redirect '/login'
     else
+        #エラー表示
+        if session[:error]
+            @error = session[:error]
+            session[:error] = nil
+        end
         now_user_id = session[:user_id]
         @now_user_name = Passwd.where(:id => now_user_id).first.user
         urls = Url.where(:user_id => now_user_id)
@@ -72,7 +81,7 @@ get '/' do
         @bookMarks = []
         #メッセージとユーザ名取得して投稿一覧に逆順で代入
         urls.reverse_each do |url|
-            @bookMarks.push(BookMark.new(url.id,url.url))
+            @bookMarks.push(BookMark.new(url.id,url.url,url.title))
         end
         erb :weblist
     end
@@ -81,9 +90,20 @@ end
 
 post '/post' do
     user_id = session[:user_id]
-    redirect '/' if params[:url].empty?
+    if params[:url].empty?
+        session[:error] = "エラー：URLを入力してください"
+        redirect '/'
+    end
+    #URLにアクセスできるかどうかを確認
+    begin
+        url = params[:url]
+        URI.open(url)
+    rescue
+        session[:error] = "エラー：URLが正しくありません"
+        redirect '/'
+    end
     #メッセージを保存
-    Url.create(:user_id => user_id, :url => params[:url])
+    Url.create(:user_id => user_id, :url => params[:url],:title => get_title(params[:url]))
     redirect '/'
 end
 

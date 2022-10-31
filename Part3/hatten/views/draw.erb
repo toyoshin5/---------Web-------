@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja" style="background-color:#2b8fe9">
+
+<head>
+  <meta charset="utf-8">
+  <title>
+    DrawOnline
+  </title>
+    <style>
+    h1{
+      color: #fff;
+    }
+    h2{
+color: #fff;
+    }
+    h3{
+color: #fff;
+    }
+    </style>
+<script src="/js/canvas.js"></script>
+  <script>
+    //コンストラクタ(手書きキャンバスのId名, 手書きキャンバスのクリアボタンのId名)
+    var mamHandwritten1=new TMamHandwritten("drawCanvasId","clearButtonId");
+    //登録するボタン押下時の設定
+    window.addEventListener("DOMContentLoaded",function(){
+      document.getElementById("submitButtonId").addEventListener("click",function(){
+        mamHandwritten1.savePicture("draw.php");
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div >
+      <h1 align="left">DrawOnline</h1>
+      <form style="margin-bottom:20px" action="/logout" method="post">
+        <input type="submit" value="ログアウト" style="border:2px solid #1b7fd9; border-radius: 0.67em;background-color: #FFFFFF;   width: 150px;   height: 35px;   color: #1b7fd9;   font-size: 16px;">
+      </form>
+
+    <div>
+      <canvas id="drawCanvasId" width="1280px" height="720px"  style="background-color:#FFF;border:1px solid #000;width:1000px;height:auto;"></canvas>
+    </div>
+    <input type="button" id="clearButtonId" value="クリア" style="width:160px;height:60px;" /><br>
+    <input type="button" id="submitButtonId" value="送信する" style="width:160px;height:60px;" />
+  </div>
+
+</body>
+
+</html>

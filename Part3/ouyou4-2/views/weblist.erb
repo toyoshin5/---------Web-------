@@ -4,38 +4,41 @@
 <head>
   <meta charset="utf-8">
   <title>
-    BulletinBoard
+    BookMarker
   </title>
+    <style>
+        .urlcell:hover {
+            background-color: #EEEEEE;
+            }
+    </style>
 </head>
 
 <body>
   <div>
-    <h1 align="left">BulletinBoard</h1>
-    <p>こんにちは。 <%=@now_user_name%> さん</p>
-    <form action="/logout" method="post">
+    <h1 align="left"><font color="#2b8fe9">BookMarker</font></h1>
+    <form style="margin-bottom:20px" action="/logout" method="post">
       <input type="submit" value="ログアウト" style="border:2px solid #1b7fd9; border-radius: 0.67em;background-color: #FFFFFF;   width: 150px;   height: 35px;   color: #1b7fd9;   font-size: 16px;">
     </form>
+
   </div>
   <form action="/post" method="post">
     <table align="center"  style="max-width: 600px; width:100%; border-collapse: collapse;border-color:#EEEEEE;table-layout: fixed" border="1">
       <tr>
         <td>
         <div style="margin:20px">
-        <h3 syele="textalign:left">タイムライン</h3>
+        <h3 syele="textalign:left"><%=@now_user_name%>の<font color="#2b8fe9">BookMark</font></h3>
         </div>
         </td> 
       </tr>
       <tr>
         <td>
-          <div style="margin:20px;display:flex">
-            <div style="margin-right:10px">
-              <img src="https://www.hokudai.ac.jp/bannerimg/gakui.png" alt="アイコン" width="50" height="50">
-            </div>
-            <div style="width: 100%">
-              <textarea style="outline: none;border:#000;font-size:18px"rows="5" cols="40" type="text" name="url" placeholder="いまどうしてる？"></textarea>
+          <div style="margin:20px;">
+           <p style="color: red"><%= @error %></p>
+            <div style="margin-right:10px;width: 100%">
+              <textarea style="outline: none;border:#000;font-size:18px"rows="5" cols="40" type="text" name="url" placeholder="ここにURLを入力"></textarea>
               <hr color="#EEEEEE">
               <div style="float: right">
-               <input type="submit" value="投稿する" style="border: none; border-radius: 18px;background-color: #2b8fe9;   width: 160px;   height: 36px;   color: #FFFFFF;   font-size: 18px;">
+               <input type="submit" value="登録する" style="margin:10px; border: none; border-radius: 18px;background-color: #2b8fe9;   width: 160px;   height: 36px;   color: #FFFFFF;   font-size: 18px;">
               </div>
             </div>
           </div>
@@ -43,13 +46,13 @@
       </tr>
     </table>
   </form>
-  <table align="center" style="max-width: 600px;border-collapse: collapse;border-color:#EEEEEE" border="1">
+  <table align="center" style="max-width: 600px; width:100%;border-collapse: collapse;border-color:#EEEEEE" border="1">
     <% @bookMarks.each do |bookmark| %>
       <tr>
-        <td>
+        <td style="width:100%" onclick>
           <div style="margin:20px;display:flex">
             <div style="margin-right:10px">
-              <img src="https://www.hokudai.ac.jp/bannerimg/gakui.png" alt="アイコン" width="50" height="50">
+              <img src="http://www.google.com/s2/favicons?domain=<%=bookmark.url%>" alt="アイコン" width="50" height="50">
             </div>
             <div style="width:100%">
               <div>
@@ -57,7 +60,7 @@
                   <%= bookmark.title %>
                 </b>
               </div>
-              <div style="white-space: pre-line"><%= bookmark.url %></div>
+              <div class="urlcell"style="white-space: pre-line" ><a href="<%= bookmark.url %>" target="_blank"><%= bookmark.url %></a></div>
                 <div style="float: right">
                     <form action="/delete" method="post">
                       <input type="hidden" name="delete_id" value="<%= bookmark.id %>">
@@ -71,7 +74,6 @@
       </tr>
       <% end %>
   </table>
-  <hr>
 
 
 
