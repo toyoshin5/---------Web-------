@@ -6,7 +6,7 @@ cgi.out("type" => "text/html","charset" => "UTF-8")  do
     msg = cgi["msg"]
     user = cgi["user"]
     NG = ["NG"]
-    if msg.length != 0 or user.length != 0 then 
+    if msg.length != 0 and user.length != 0 then 
         #NGワードが含まれていなかったら
         if NG.all?{|ng| msg.include?(ng) == false} then
             # #いまのファイルの末尾の行のid+1をidとする

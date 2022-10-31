@@ -1,5 +1,5 @@
-current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-2/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
-/Users/toyoshin/.rbenv/versions/2.7.6/bin/ruby -I /Users/toyoshin/.rbenv/versions/2.7.6/lib/ruby/2.7.0 -r ./siteconf20221028-44683-qx415t.rb extconf.rb
+current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-2-2/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
+/Users/toyoshin/.rbenv/versions/2.7.6/bin/ruby -I /Users/toyoshin/.rbenv/versions/2.7.6/lib/ruby/2.7.0 -r ./siteconf20221031-66626-cam6z1.rb extconf.rb
 checking for sqlite3.h... yes
 checking for pthread_create() in -lpthread... yes
 checking for sqlite3_libversion_number() in -lsqlite3... yes
@@ -16,10 +16,10 @@ checking for sqlite3_int64 in sqlite3.h... yes
 checking for sqlite3_uint64 in sqlite3.h... yes
 creating Makefile
 
-current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-2/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
+current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-2-2/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
 make "DESTDIR=" clean
 
-current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-2/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
+current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-2-2/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
 make "DESTDIR="
 compiling backup.c
 compiling database.c
@@ -28,6 +28,6 @@ compiling sqlite3.c
 compiling statement.c
 linking shared-object sqlite3/sqlite3_native.bundle
 
-current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-2/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
+current directory: /Users/toyoshin/Documents/HU/B3実験Ⅱ/データベースとWebサービス構築/Part3/ouyou4-2-2/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.3.13/ext/sqlite3
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20221028-44683-17a7ae9/sqlite3
+/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20221031-66626-17g1c14/sqlite3
