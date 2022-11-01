@@ -60,16 +60,29 @@ post '/login' do
         redirect '/login' #@resがnilだと /loginにリダイレクト
     end
 end
-
+post '/draw' do
+    erb :draw
+end
 #メイン画面
 get '/' do
     #セッションにuser_idがあるかどうかでログインしているかどうかを判断している
     if session[:user_id].nil?
         redirect '/login'
     else
-        erb :draw
+        @projectCnt = 6
+        erb :main
     end
+end
+post '/save' do
 
+    imgPng = params["imgpng"]
+    imgPng = imgPng.sub(/^data:image\/png;base64,/, "")
+    imgPng = Base64.decode64(imgPng)
+    #画像を新規保存する
+    File.open("public/img/test.png", 'wb') do |f|
+        f.write(imgPng)
+    end
+    redirect '/'
 end
 
 post '/logout' do

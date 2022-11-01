@@ -1,11 +1,4 @@
-//参考 canvasについて
-//  (canvas.width, canvas.height):
-//      キャンバスが内部で持っている画像データの幅,高さ
-//  (canvas.style.width, canvas.style.height):
-//      実際にキャンバスが表示される大きさ
-//
-//  （例）canvas.style.width=400px canvas.width=200pxの場合は、横に2倍して表示される
-//  （例）canvas.style.height=150px canvas.height=300pxの場合は、縦に1/2倍して表示される
+
 
 //コンストラクタの引数：手書きキャンバスのId名,手書きキャンバスのクリアボタンのId名
 //使用例  drawcan1=new TMamHandwritten("canvasID1","clearButtonId1");
@@ -26,7 +19,8 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
     this.rate=[]; this.rate.x=0; this.rate.y=0;
     this.can=null;
     this.ctx=null;
-    this.clearButton=null;
+    this.clearButton = null;
+
     window.addEventListener("DOMContentLoaded",function(){
       this.can=document.getElementById(this.drawCanvasId);
       //イベントの設定
@@ -37,7 +31,20 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
       this.can.addEventListener("mousemove",this.onMouseMove.bind(this));
       this.can.addEventListener("mouseup",this.onMouseUp.bind(this));
       window.addEventListener("mousemove",this.stopShake.bind(this));
-      this.ctx=this.can.getContext("2d");
+      this.ctx = this.can.getContext("2d");
+      console.log(this.ctx);
+      //初期化
+      // Image オブジェクトを生成
+      var img = new Image();
+      img.src = '../img/test.png';
+      // 画像読み込み終了してから描画
+      function drawToCanvas( ct ){
+        return function(){
+          console.log(ct);
+          ct.drawImage(img, 10, 10);
+        }
+      }
+      img.onload = drawToCanvas( this.ctx ); 
       //クリアボタンの設定
       if(document.getElementById(this.clearButtonId)){
         this.clearButton=document.getElementById(this.clearButtonId);
@@ -50,7 +57,7 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
           );
         }.bind(this));
       }
-      //スタイルシートの登録（MSのIE11、iOS等でドラッグ時に画面が揺れないように）
+      //スタイルシート
       let style=document.createElement("style");
       document.head.appendChild(style);
       style.sheet.insertRule('canvas#'+this.drawCanvasId+'{-ms-touch-action:none;touch-action:none;}',0);
@@ -60,7 +67,8 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
       //canvas.heightとcanvas.style.heightの比率を取得する
       this.rate.y=parseInt(this.can.height)/parseInt(s.height);
     }.bind(this));
-  
+      //キャンバスの初期化
+     
     //TouchStart時
     this.onDown=function(event){
       this.isMouseDown=true;
@@ -135,7 +143,7 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
         "y":document.documentElement.scrollTop  || document.body.scrollTop
       };
     }
-    //手書き画像をPNG形式でData URIスキーム(base64)を使って文字列に変換してPOSTする場合
+    //手書き画像をPNG形式でData URIスキーム(base64)を使って文字列に変換してPOSTする
     this.savePicture=function(postURL){
       let imgPng=this.can.toDataURL('image/png');
       //imgPng=imgPng.replace(/^data:image\/png;base64,/,'');

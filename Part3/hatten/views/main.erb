@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>
+    DrawOnline
+  </title>
+    <style>
+    html{
+      height: 100%;
+      margin:0px;
+    }
+    body{
+      height: 100%;
+      margin:0;
+    }
+    h1{
+      font-size: 40px;
+    }
+    .canvas {
+    padding: 0px;                      /* 余白指定 */
+    background-color:#FFF;           /* 背景色指定 */
+    box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
+    border-radius: 10px;
+    width:980px;
+    height:auto;                  /* 高さ指定 */
+    }
+    canvas{
+      width:980px;
+      height:auto;     
+    }
+    .HStack{
+      display: flex;
+      flex-direction: row;
+    }
+    .projectButton{
+      border:2px solid #1b7fd9;
+      border-radius: 0.67em;
+      background-color: #FFFFFF;
+      width: 200px;
+      height: 200px;
+      color: #1b7fd9;
+      font-size: 16px;
+      margin:20px;
+    }
+
+
+    </style>
+<script src="/js/canvas.js"></script>
+  <script>
+  </script>
+</head>
+
+<body>
+<div align="center" style="width:100%; height:100%;background-color:#2b8fe9">
+  <div align="left" style="width:1000px; height:100%;background-color:#FFF;padding:30px">
+  <div class="HStack">
+  <h1 >Draw<font color="#2b8fe9">Online</font></h1>
+<form action="/logout" method="post">
+        <input type="submit" value="ログアウト" style="margin:36px 36px 36px 36px ; border:2px solid #1b7fd9; border-radius: 0.67em;background-color: #FFFFFF;   width: 150px;   height: 35px;   color: #1b7fd9;   font-size: 16px;">
+      </form>
+  </div>   
+      <h2 >プロジェクト選択</h2>
+       
+      <% for j in 1..((@projectCnt-1)/4).floor+1 do %>
+        <div class="HStack">
+            <% for i in (j-1)*4+1..[j*4,@projectCnt].min do %>
+            <form action="/draw" method="post">
+                <input type="hidden" name="project_id" value="<%=0%>">
+                <input type="submit" class="projectButton" value="プロジェクト<%= i %>">
+            </form>
+            <% end %>
+        </div>
+    <%end%>
+  </div>
+</div>
+
+</body>
+
+</html>
