@@ -10,18 +10,7 @@ ActiveRecord::Base.establish_connection(
 )
 class Passwd < ActiveRecord::Base
 end 
-# class Url < ActiveRecord::Base
-# end
-
-#ブックマークのクラス
-class BookMark
-    attr_accessor :id,:url,:title
-    def initialize(id,url,title)
-        @id = id
-        @url = url
-        @title = title
-    end
-    #URLからWebページのタイトルを取得する
+class Project < ActiveRecord::Base
 end
 
 
@@ -61,6 +50,8 @@ post '/login' do
     end
 end
 post '/draw' do
+    projectID = params[:project_id]
+    @project = Project.find(projectID)
     erb :draw
 end
 #メイン画面
@@ -69,7 +60,8 @@ get '/' do
     if session[:user_id].nil?
         redirect '/login'
     else
-        @projectCnt = 6
+        @projectCnt = 3
+        @project = Project.all
         erb :main
     end
 end
@@ -79,7 +71,7 @@ post '/save' do
     imgPng = imgPng.sub(/^data:image\/png;base64,/, "")
     imgPng = Base64.decode64(imgPng)
     #画像を新規保存する
-    File.open("public/img/test.png", 'wb') do |f|
+    File.open("public/img/"+params["projectID"]+".png", 'wb') do |f|
         f.write(imgPng)
     end
     redirect '/'

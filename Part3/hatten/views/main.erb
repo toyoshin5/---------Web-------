@@ -65,10 +65,10 @@
        
       <% for j in 1..((@projectCnt-1)/4).floor+1 do %>
         <div class="HStack">
-            <% for i in (j-1)*4+1..[j*4,@projectCnt].min do %>
+            <% for i in (j-1)*4..[j*4,@projectCnt-1].min do %>
             <form action="/draw" method="post">
-                <input type="hidden" name="project_id" value="<%=0%>">
-                <input type="submit" class="projectButton" value="プロジェクト<%= i %>">
+                <input type="hidden" name="project_id" value="<%=@project[i].id%>">
+                <input type="submit" class="projectButton" value="<%=@project[i].title%>">
             </form>
             <% end %>
         </div>

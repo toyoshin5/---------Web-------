@@ -58,7 +58,7 @@
 <script src="/js/canvas.js"></script>
   <script>
     //コンストラクタ(手書きキャンバスのId名, 手書きキャンバスのクリアボタンのId名)
-    var mamHandwritten1=new TMamHandwritten("test","clearButtonId");
+    var mamHandwritten1=new TMamHandwritten("canvas<%=@project.id%>","clearButtonId");
     //保存ボタンを押したときに呼ばれる関数
     window.addEventListener("DOMContentLoaded",function(){
       document.getElementById("submitButtonId").addEventListener("click",function(){
@@ -75,7 +75,7 @@
       <h2 >Project1</h2>
       <h3 align="left">Created by:<font color="#2b8fe9">ShingoToyoda</font> Now author:<font color="#2b8fe9">ShingoToyoda</font></h3>      
     <div class="canvas">
-      <canvas id="test" width="1280px" height="720px"  ></canvas>
+      <canvas id="canvas<%=@project.id%>" width="1280px" height="720px"  ></canvas>
     </div>
     <div class="HStack" style="width:350px;margin:20px">
     <input class="clear"type="button" id="clearButtonId" value="すべて取り消す"/>

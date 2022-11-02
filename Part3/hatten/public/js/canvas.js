@@ -6,7 +6,7 @@
 
 function TMamHandwritten(drawCanvasId,clearButtonId){
     'use strict';
-    this.drawCanvasId=drawCanvasId;
+    this.drawCanvasId=drawCanvasId;//"canvas"+id
     this.clearButtonId=clearButtonId;
     this.isMouseDown=false;
     //マウス、タップの座標
@@ -36,15 +36,20 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
       //初期化
       // Image オブジェクトを生成
       var img = new Image();
-      img.src = '../img/test.png';
-      // 画像読み込み終了してから描画
+
       function drawToCanvas( ct ,img){
         return function(){
           console.log(ct);
           ct.drawImage(img, 10, 10);
         }
       }
-      img.onload = drawToCanvas( this.ctx ,img); 
+      img.src = "../img/" + this.drawCanvasId.split("canvas").join("") + ".png";
+      console.log(img.src);
+      img.onload = drawToCanvas(this.ctx, img);
+      img.onerror = function() {
+        // 読み込み失敗時には新たに作成(スルー)
+      }
+   
       //クリアボタンの設定
       if(document.getElementById(this.clearButtonId)){
         this.clearButton=document.getElementById(this.clearButtonId);
@@ -60,7 +65,7 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
       //スタイルシート
       let style=document.createElement("style");
       document.head.appendChild(style);
-      style.sheet.insertRule('canvas#'+this.drawCanvasId+'{-ms-touch-action:none;touch-action:none;}',0);
+      style.sheet.insertRule('canvas#canvas'+this.drawCanvasId+'{-ms-touch-action:none;touch-action:none;}',0);
       let s=window.getComputedStyle(this.can);
       //canvas.widthとcanvas.style.widthの比率を取得する
       this.rate.x=parseInt(this.can.width)/parseInt(s.width);
@@ -153,8 +158,13 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
       let h=document.createElement("input");
       h.setAttribute("type","hidden");
       h.setAttribute("value",imgPng);
-      h.setAttribute("name","imgpng");
+      h.setAttribute("name", "imgpng");
+      let h2=document.createElement("input");
+      h2.setAttribute("type","hidden");
+      h2.setAttribute("value",this.drawCanvasId.split("canvas").join(""));//canvasidからcanvasを取り除いたものを送信
+      h2.setAttribute("name","projectID");
       fm.appendChild(h);
+      fm.appendChild(h2);
       document.body.appendChild(fm);
       fm.submit();
     }
