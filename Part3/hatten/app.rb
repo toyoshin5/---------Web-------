@@ -72,6 +72,7 @@ get '/' do
             end
         end
         @projectCnt = Project.count
+        @now_user = session[:user_id]
         erb :main
     end
 end

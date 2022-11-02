@@ -40,6 +40,12 @@ function TMamHandwritten(drawCanvasId) {
       this.ctx = this.can.getContext("2d");
       this.ctx.strokeStyle = "#000000"; //線の色
       this.ctx.fillStyle = "rgb(255,255,255)";
+      this.ctx.fillRect(
+        0,
+        0,
+        this.can.getBoundingClientRect().width * this.rate.x,
+        this.can.getBoundingClientRect().height * this.rate.y
+      );
       this.ctx.lineWidth = 5; //線の太さ
       console.log(this.ctx);
       //初期化
@@ -52,12 +58,21 @@ function TMamHandwritten(drawCanvasId) {
           ct.drawImage(img, 10, 10);
         };
       }
+      function whiteToCanvas(self) {
+        return function () {
+          self.ctx.fillStyle = "rgb(255,255,255)";
+          self.ctx.fillRect(
+            0,
+            0,
+            self.can.getBoundingClientRect().width * self.rate.x,
+            self.can.getBoundingClientRect().height * self.rate.y
+          );
+        };
+      }
       img.src = "../img/" + this.drawCanvasId.split("canvas").join("") + ".png";
       console.log(img.src);
       img.onload = drawToCanvas(this.ctx, img);
-      img.onerror = function () {
-        // 読み込み失敗時には新たに作成(スルー)
-      };
+      img.onerror = whiteToCanvas(this);
 
       //クリアボタンの設定
       if (document.getElementById("clear")) {
@@ -65,19 +80,10 @@ function TMamHandwritten(drawCanvasId) {
         this.clearButton.addEventListener(
           "click",
           function () {
-            // this.ctx.fillStyle = "rgb(255,255,255)";
-            // this.ctx.fillRect(
-            //   0,
-            //   0,
-            //   this.can.getBoundingClientRect().width * this.rate.x,
-            //   this.can.getBoundingClientRect().height * this.rate.y
-            // );
             img.src =
               "../img/" + this.drawCanvasId.split("canvas").join("") + ".png";
             img.onload = drawToCanvas(this.ctx, img);
-            img.onerror = function () {
-              // 読み込み失敗時には新たに作成(スルー)
-            };
+            img.onerror = whiteToCanvas(this);
           }.bind(this)
         );
       }

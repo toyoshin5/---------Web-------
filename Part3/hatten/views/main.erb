@@ -44,6 +44,26 @@
       font-size: 16px;
       margin-right:5px;
     }
+    .deleteButton{
+      border:2px solid #1b7fd9;
+      border-radius: 0.40em;
+      background-color: #FFFFFF;
+      width: 85px;
+      height: 40px;
+      color: #1b7fd9;
+      font-size: 16px;
+      margin-right:5px;
+    }
+    .deleteButtonDisabled{
+      border:1px solid #EEEEEE;
+      border-radius: 0.40em;
+      background-color: #FFFFFF;
+      width: 85px;
+      height: 40px;
+      color: #1b7fd9;
+      font-size: 16px;
+      margin-right:5px;
+    }
     .projectButton{
       border:0px solid #1b7fd9;
       border-radius: 0.40em;
@@ -106,7 +126,11 @@
               <div class="HStack">
                 <form action="/delete" method="post">
                   <input type="hidden" name="project_id" value="<%=@project[i].id%>">
+                  <%if @project[i].user_id == @now_user%>
                   <input type="submit" class="deleteButton" value="削除">
+                  <%else%>
+                  <input type="submit" class="deleteButtonDisabled" value="" disabled>
+                  <%end%>
                 </form>
                 <form action="/draw" method="post">
                   <input type="hidden" name="project_id" value="<%=@project[i].id%>">
