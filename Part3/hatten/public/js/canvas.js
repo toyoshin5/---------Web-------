@@ -38,13 +38,13 @@ function TMamHandwritten(drawCanvasId,clearButtonId){
       var img = new Image();
       img.src = '../img/test.png';
       // 画像読み込み終了してから描画
-      function drawToCanvas( ct ){
+      function drawToCanvas( ct ,img){
         return function(){
           console.log(ct);
           ct.drawImage(img, 10, 10);
         }
       }
-      img.onload = drawToCanvas( this.ctx ); 
+      img.onload = drawToCanvas( this.ctx ,img); 
       //クリアボタンの設定
       if(document.getElementById(this.clearButtonId)){
         this.clearButton=document.getElementById(this.clearButtonId);
