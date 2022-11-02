@@ -2,10 +2,9 @@
 //使用例  drawcan1=new TMamHandwritten("canvasID1","clearButtonId1");
 //        drawcan2=new TMamHandwritten("canvasID2","clearButtonId2");
 
-function TMamHandwritten(drawCanvasId, clearButtonId) {
+function TMamHandwritten(drawCanvasId) {
   "use strict";
   this.drawCanvasId = drawCanvasId; //"canvas"+id
-  this.clearButtonId = clearButtonId;
   this.isMouseDown = false;
   //マウス、タップの座標
   this.position = [];
@@ -20,6 +19,7 @@ function TMamHandwritten(drawCanvasId, clearButtonId) {
   this.can = null;
   this.ctx = null;
   this.clearButton = null;
+  this.eraserButton = null;
 
   window.addEventListener(
     "DOMContentLoaded",
@@ -38,6 +38,9 @@ function TMamHandwritten(drawCanvasId, clearButtonId) {
       this.can.addEventListener("mouseup", this.onMouseUp.bind(this));
       window.addEventListener("mousemove", this.stopShake.bind(this));
       this.ctx = this.can.getContext("2d");
+      this.ctx.strokeStyle = "#000000"; //線の色
+      this.ctx.fillStyle = "rgb(255,255,255)";
+      this.ctx.lineWidth = 5; //線の太さ
       console.log(this.ctx);
       //初期化
       // Image オブジェクトを生成
@@ -57,18 +60,46 @@ function TMamHandwritten(drawCanvasId, clearButtonId) {
       };
 
       //クリアボタンの設定
-      if (document.getElementById(this.clearButtonId)) {
-        this.clearButton = document.getElementById(this.clearButtonId);
+      if (document.getElementById("clear")) {
+        this.clearButton = document.getElementById("clear");
         this.clearButton.addEventListener(
           "click",
           function () {
-            this.ctx.fillStyle = "rgb(255,255,255)";
-            this.ctx.fillRect(
-              0,
-              0,
-              this.can.getBoundingClientRect().width * this.rate.x,
-              this.can.getBoundingClientRect().height * this.rate.y
-            );
+            // this.ctx.fillStyle = "rgb(255,255,255)";
+            // this.ctx.fillRect(
+            //   0,
+            //   0,
+            //   this.can.getBoundingClientRect().width * this.rate.x,
+            //   this.can.getBoundingClientRect().height * this.rate.y
+            // );
+            img.src =
+              "../img/" + this.drawCanvasId.split("canvas").join("") + ".png";
+            img.onload = drawToCanvas(this.ctx, img);
+            img.onerror = function () {
+              // 読み込み失敗時には新たに作成(スルー)
+            };
+          }.bind(this)
+        );
+      }
+      //消しゴムボタンの設定
+      if (document.getElementById("eraser")) {
+        this.clearButton = document.getElementById("eraser");
+        this.clearButton.addEventListener(
+          "click",
+          function () {
+            this.ctx.strokeStyle = "#FFFFFF"; //線の色
+            this.ctx.lineWidth = 20;
+          }.bind(this)
+        );
+      }
+      //鉛筆ボタンの設定
+      if (document.getElementById("color")) {
+        this.clearButton = document.getElementById("color");
+        this.clearButton.addEventListener(
+          "click",
+          function () {
+            this.ctx.strokeStyle = "#000000"; //線の色
+            this.ctx.lineWidth = 5;
           }.bind(this)
         );
       }
@@ -163,8 +194,6 @@ function TMamHandwritten(drawCanvasId, clearButtonId) {
     event.stopPropagation();
   };
   this.drawLine = function () {
-    this.ctx.strokeStyle = "#000000"; //線の色
-    this.ctx.lineWidth = 5; //線の太さ
     this.ctx.lineJoin = "round";
     this.ctx.lineCap = "round";
     this.ctx.beginPath();
@@ -178,7 +207,6 @@ function TMamHandwritten(drawCanvasId, clearButtonId) {
     );
     this.ctx.stroke();
   };
-
   //スクロール位置を取得する
   this.getScrollPosition = function () {
     return {

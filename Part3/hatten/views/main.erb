@@ -34,14 +34,44 @@
       display: flex;
       flex-direction: row;
     }
+    .deleteButton{
+      border:2px solid #1b7fd9;
+      border-radius: 0.40em;
+      background-color: #FFFFFF;
+      width: 85px;
+      height: 40px;
+      color: #1b7fd9;
+      font-size: 16px;
+      margin-right:5px;
+    }
     .projectButton{
+      border:0px solid #1b7fd9;
+      border-radius: 0.40em;
+      background-color:#1b7fd9;
+      width: 85px;
+      height: 40px;
+      color: #ffffff;
+      font-size: 16px;
+      margin-left:5px;
+    }
+      .projectTile{
+      border:1px solid #EEEEEE;
+      border-radius: 0.67em;
+      background-color: #FFFFFF;
+      width: 180px;
+      font-size: 16px;
+      margin:20px;
+      padding:10px;
+    }
+        .newProjectButton{
       border:2px solid #1b7fd9;
       border-radius: 0.67em;
       background-color: #FFFFFF;
       width: 200px;
-      height: 200px;
+      height: 100px;
       color: #1b7fd9;
       font-size: 16px;
+      font-weight: bold;
       margin:20px;
     }
 
@@ -61,18 +91,40 @@
         <input type="submit" value="ログアウト" style="margin:36px 36px 36px 36px ; border:2px solid #1b7fd9; border-radius: 0.67em;background-color: #FFFFFF;   width: 150px;   height: 35px;   color: #1b7fd9;   font-size: 16px;">
       </form>
   </div>   
-      <h2 >プロジェクト選択</h2>
+      <h2>プロジェクト選択</h2>
        
       <% for j in 1..((@projectCnt-1)/4).floor+1 do %>
         <div class="HStack">
-            <% for i in (j-1)*4..[j*4,@projectCnt-1].min do %>
-            <form action="/draw" method="post">
-                <input type="hidden" name="project_id" value="<%=@project[i].id%>">
-                <input type="submit" class="projectButton" value="<%=@project[i].title%>">
-            </form>
+            <% for i in (j-1)*4..[j*4-1,@projectCnt-1].min do %>
+            <div class="projectTile">
+            <div>
+            <b><%=@project[i].title%></b><br/>
+            Created by <br/> <font color="#2b8fe9"><%=@project_author[i]%></font>
+            </div>
+            <img src="/img/<%=@project[i].id%>.png" style="width:100%; height:100px; margin-bottom:10px">
+
+              <div class="HStack">
+                <form action="/delete" method="post">
+                  <input type="hidden" name="project_id" value="<%=@project[i].id%>">
+                  <input type="submit" class="deleteButton" value="削除">
+                </form>
+                <form action="/draw" method="post">
+                  <input type="hidden" name="project_id" value="<%=@project[i].id%>">
+                  <input type="submit" class="projectButton" value="開く">
+                </form>
+              </div>
+          
+            </div>
             <% end %>
         </div>
     <%end%>
+    <hr>
+    <form action="/create" method="get">
+        <input type="submit" class="newProjectButton" value="新規プロジェクト作成" >
+    </form>
+
+
+
   </div>
 </div>
 

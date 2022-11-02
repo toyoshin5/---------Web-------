@@ -27,7 +27,7 @@
     height:auto;                  /* 高さ指定 */
     }
     canvas{
-      width:1000px;
+      width:980px;
       height:auto;     
     }
     .HStack{
@@ -39,7 +39,16 @@
       border:2px solid #1b7fd9;
       border-radius: 0.67em;
       background-color: #FFFFFF;
-      width: 160px;
+      width: 180px;
+      height: 50px;
+      color: #1b7fd9;
+      font-size: 16px;
+    }
+    .tool{
+      border:2px solid #1b7fd9;
+      border-radius: 0.67em;
+      background-color: #FFFFFF;
+      width: 100px;
       height: 50px;
       color: #1b7fd9;
       font-size: 16px;
@@ -48,7 +57,7 @@
       border:2px solid #1b7fd9;
       border-radius: 0.67em;
       background-color: #1b7fd9;
-      width: 160px;
+      width: 180px;
       height: 50px;
       color: #FFFFFF;
       font-size: 16px;
@@ -58,7 +67,7 @@
 <script src="/js/canvas.js"></script>
   <script>
     //コンストラクタ(手書きキャンバスのId名, 手書きキャンバスのクリアボタンのId名)
-    var mamHandwritten1=new TMamHandwritten("canvas<%=@project.id%>","clearButtonId");
+    var mamHandwritten1=new TMamHandwritten("canvas<%=@project.id%>");
     //保存ボタンを押したときに呼ばれる関数
     window.addEventListener("DOMContentLoaded",function(){
       document.getElementById("submitButtonId").addEventListener("click",function(){
@@ -69,16 +78,20 @@
 </head>
 
 <body>
-<div align="center" style="width:100%; height:100%;background-color:#2b8fe9">
+<div align="center" style="width:100%; height:1000px;background-color:#2b8fe9">
   <div align="left" style="width:1000px; height:100%;background-color:#FFF;padding:30px">
       <h1 >Draw<font color="#2b8fe9">Online</font></h1>
-      <h2 >Project1</h2>
-      <h3 align="left">Created by:<font color="#2b8fe9">ShingoToyoda</font> Now author:<font color="#2b8fe9">ShingoToyoda</font></h3>      
+      <h2 ><%=@project.title%></h2>
+      <h3 align="left">Created by:<font color="#2b8fe9"><%=@project_author%></font> Now author:<font color="#2b8fe9"><%=@now_author%></font></h3>      
     <div class="canvas">
       <canvas id="canvas<%=@project.id%>" width="1280px" height="720px"  ></canvas>
     </div>
-    <div class="HStack" style="width:350px;margin:20px">
-    <input class="clear"type="button" id="clearButtonId" value="すべて取り消す"/>
+    <div class="HStack" style="width:220px;margin:20px">
+    <input class="tool" type="button" id="eraser" value="消しゴム"/>
+    <input class="tool" type="button" id="color" value="鉛筆"/>
+    </div>
+    <div class="HStack" style="width:390px;margin:20px">
+    <input class="clear" type="button" id="clear" value="操作をすべて取り消す"/>
     <input class="submit" type="submit" id="submitButtonId" value="保存して終了する"/>
     </div>
   </div>

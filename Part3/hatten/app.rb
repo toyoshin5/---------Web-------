@@ -52,6 +52,8 @@ end
 post '/draw' do
     projectID = params[:project_id]
     @project = Project.find(projectID)
+    @project_author = Passwd.find(@project['user_id']).user
+    @now_author = Passwd.find(session[:user_id]).user
     erb :draw
 end
 #メイン画面
@@ -60,8 +62,16 @@ get '/' do
     if session[:user_id].nil?
         redirect '/login'
     else
-        @projectCnt = 3
         @project = Project.all
+        @project_author = []
+        @project.each do |project|
+            if project['user_id'] == session[:user_id]
+                @project_author << "あなた" 
+            else
+                @project_author << Passwd.find(project['user_id']).user
+            end
+        end
+        @projectCnt = Project.count
         erb :main
     end
 end
@@ -73,6 +83,28 @@ post '/save' do
     #画像を新規保存する
     File.open("public/img/"+params["projectID"]+".png", 'wb') do |f|
         f.write(imgPng)
+    end
+    redirect '/'
+end
+
+get '/create' do
+    erb :create
+end
+
+post '/create' do
+    project = Project.new
+    project.title = params[:title]
+    project.user_id = session[:user_id]
+    project.save
+    redirect '/'
+end
+post '/delete' do
+    projectID = params[:project_id]
+    project = Project.find(projectID)
+    project.destroy
+    #ファイルが存在したら
+    if File.exist?("public/img/"+projectID+".png")
+        File.delete("public/img/"+projectID+".png")
     end
     redirect '/'
 end
